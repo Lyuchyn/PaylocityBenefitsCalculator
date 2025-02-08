@@ -2,7 +2,7 @@
 using Api.Repositories;
 using AutoMapper;
 
-namespace Api.Services
+namespace Api.Services.Employees
 {
     public class EmployeeService : IEmployeeService
     {
@@ -16,16 +16,16 @@ namespace Api.Services
         }
 
         /// <inheritdoc/>
-        public async Task<List<GetEmployeeDto>> GetAll(CancellationToken cancellationToken = default)
+        public async Task<List<GetEmployeeDto>> GetAll()
         {
-            var employees = await _employeesRepository.GetAll(cancellationToken);
+            var employees = await _employeesRepository.GetAll();
             return _mapper.Map<List<GetEmployeeDto>>(employees);
         }
 
         /// <inheritdoc/>
-        public async Task<GetEmployeeDto?> GetById(int id, CancellationToken cancellationToken)
+        public async Task<GetEmployeeDto?> GetById(int id)
         {
-            var employee = await _employeesRepository.GetById(id, cancellationToken);
+            var employee = await _employeesRepository.GetById(id);
             return _mapper.Map<GetEmployeeDto>(employee);
         }
     }

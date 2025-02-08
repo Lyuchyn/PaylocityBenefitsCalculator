@@ -13,15 +13,15 @@ namespace Api.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<List<Employee>> GetAll(CancellationToken cancellationToken = default)
+        public async Task<List<Employee>> GetAll()
         {
-            var employees = await GetBaseQuery().ToListAsync(cancellationToken);
+            var employees = await GetBaseQuery().ToListAsync();
             return employees;
         }
 
-        public async Task<Employee?> GetById(int id, CancellationToken cancellationToken = default)
+        public async Task<Employee?> GetById(int id)
         {
-            var employee = await GetBaseQuery().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            var employee = await GetBaseQuery().FirstOrDefaultAsync(x => x.Id == id);
             return employee;
         }
 

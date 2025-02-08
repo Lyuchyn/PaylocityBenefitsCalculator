@@ -4,8 +4,8 @@ namespace Api.Repositories
 {
     public interface IEmployeesRepository
     {
-        Task<List<Employee>> GetAll(CancellationToken cancellationToken);
+        Task<List<Employee>> GetAll();
 
-        Task<Employee?> GetById(int id, CancellationToken cancellationToken);
+        Task<Employee?> GetById(int id);
     }
 }

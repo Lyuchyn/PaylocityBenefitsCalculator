@@ -1,8 +1,13 @@
+using Api.Configs;
 using Api.Data;
 using Api.Mappings;
 using Api.Models;
 using Api.Repositories;
-using Api.Services;
+using Api.Services.Benefits;
+using Api.Services.Dependents;
+using Api.Services.Employees;
+using Api.Services.Paycheck;
+using Api.Services.Tax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -10,11 +15,32 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("benefitsdb"));
+
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IDependentService, DependentService>();
+builder.Services.AddScoped<IPaycheckService, PaycheckService>();
+builder.Services.AddScoped<ITaxCalculationService, TaxCalculationService>();
+builder.Services.AddScoped<IBenefitService, BenefitService>();
+
 builder.Services.AddScoped<IEmployeesRepository, EmployeesRepository>();
 builder.Services.AddScoped<IDependentsRepository, DependentsRepository>();
+
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));
+
+builder.Services.AddOptions<PaycheckConfig>()
+    .Bind(builder.Configuration.GetSection(PaycheckConfig.SectionName))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+builder.Services.AddOptions<TaxRateConfig>()
+    .Bind(builder.Configuration.GetSection(TaxRateConfig.SectionName))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+builder.Services.AddOptions<BenefitsCostConfig>()
+    .Bind(builder.Configuration.GetSection(BenefitsCostConfig.SectionName))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

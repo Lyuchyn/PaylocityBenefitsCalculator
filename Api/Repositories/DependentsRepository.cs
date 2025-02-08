@@ -13,20 +13,20 @@ namespace Api.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<List<Dependent>> GetAll(CancellationToken cancellationToken = default)
+        public async Task<List<Dependent>> GetAll()
         {
             var dependents = await _dbContext.Dependents
                 .AsNoTracking()
-                .ToListAsync(cancellationToken);
+                .ToListAsync();
 
             return dependents;
         }
 
-        public async Task<Dependent?> GetById(int id, CancellationToken cancellationToken = default)
+        public async Task<Dependent?> GetById(int id)
         {
             var dependent = await _dbContext.Dependents
                 .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             return dependent;
         }

@@ -1,6 +1,6 @@
 ﻿using Api.Dtos.Employee;
 using Api.Models;
-using Api.Services;
+using Api.Services.Employees;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -19,9 +19,9 @@ public class EmployeesController : ControllerBase
 
     [SwaggerOperation(Summary = "Get employee by id")]
     [HttpGet("{id}")]
-    public async Task<ActionResult<ApiResponse<GetEmployeeDto>>> Get(int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<ApiResponse<GetEmployeeDto>>> Get(int id)
     {
-        var employee = await _employeeService.GetById(id, cancellationToken);
+        var employee = await _employeeService.GetById(id);
 
         return employee is null
             ? NotFound() 
@@ -34,9 +34,24 @@ public class EmployeesController : ControllerBase
 
     [SwaggerOperation(Summary = "Get all employees")]
     [HttpGet("")]
-    public async Task<ActionResult<ApiResponse<List<GetEmployeeDto>>>> GetAll(CancellationToken cancellationToken)
+    public async Task<ActionResult<ApiResponse<List<GetEmployeeDto>>>> GetAll()
     {
-        var employees = await _employeeService.GetAll(cancellationToken);
+        var employees = await _employeeService.GetAll();
+
+        var result = new ApiResponse<List<GetEmployeeDto>>
+        {
+            Data = employees,
+            Success = true
+        };
+
+        return result;
+    }
+
+    [SwaggerOperation(Summary = "Gets the employee's paycheck")]
+    [HttpGet("{id}/paycheck")]
+    public async Task<ActionResult<ApiResponse<List<GetEmployeeDto>>>> GetEmployeePaycheck(int id)
+    {
+        var employees = await _employeeService.GetAll();
 
         var result = new ApiResponse<List<GetEmployeeDto>>
         {

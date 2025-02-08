@@ -2,7 +2,7 @@
 using Api.Repositories;
 using AutoMapper;
 
-namespace Api.Services
+namespace Api.Services.Dependents
 {
     public class DependentService : IDependentService
     {
@@ -16,16 +16,16 @@ namespace Api.Services
         }
 
         /// <inheritdoc/>
-        public async Task<List<GetDependentDto>> GetAll(CancellationToken cancellationToken)
+        public async Task<List<GetDependentDto>> GetAll()
         {
-            var dependents = await _dependentsRepository.GetAll(cancellationToken);
+            var dependents = await _dependentsRepository.GetAll();
             return _mapper.Map<List<GetDependentDto>>(dependents);
         }
 
         /// <inheritdoc/>
-        public async Task<GetDependentDto?> GetById(int id, CancellationToken cancellationToken)
+        public async Task<GetDependentDto?> GetById(int id)
         {
-            var dependent = await _dependentsRepository.GetById(id, cancellationToken);
+            var dependent = await _dependentsRepository.GetById(id);
             return _mapper.Map<GetDependentDto>(dependent);
         }
     }

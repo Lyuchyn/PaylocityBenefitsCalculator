@@ -1,6 +1,6 @@
 ﻿using Api.Dtos.Dependent;
 using Api.Models;
-using Api.Services;
+using Api.Services.Dependents;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -19,9 +19,9 @@ public class DependentsController : ControllerBase
 
     [SwaggerOperation(Summary = "Get dependent by id")]
     [HttpGet("{id}")]
-    public async Task<ActionResult<ApiResponse<GetDependentDto>>> Get(int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<ApiResponse<GetDependentDto>>> Get(int id)
     {
-        var dependent = await _dependentService.GetById(id, cancellationToken);
+        var dependent = await _dependentService.GetById(id);
 
         return dependent is null
             ? NotFound()
@@ -34,9 +34,9 @@ public class DependentsController : ControllerBase
 
     [SwaggerOperation(Summary = "Get all dependents")]
     [HttpGet("")]
-    public async Task<ActionResult<ApiResponse<List<GetDependentDto>>>> GetAll(CancellationToken cancellationToken)
+    public async Task<ActionResult<ApiResponse<List<GetDependentDto>>>> GetAll()
     {
-        var dependents = await _dependentService.GetAll(cancellationToken);
+        var dependents = await _dependentService.GetAll();
 
         var result = new ApiResponse<List<GetDependentDto>>
         {
