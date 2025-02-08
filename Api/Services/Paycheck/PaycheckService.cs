@@ -41,7 +41,9 @@ namespace Api.Services.Paycheck
              - Deductions (such as taxes, insurance, retirement contributions)
              - Net pay (the final amount the employee takes home after deductions)
              This code calculates the paycheck by following formula (for simplicity we calculate only federal tax):
-                NetPay = GrossPay + Benefits − FederalTaxDeduction
+                NetPay = GrossPay - FederalTaxDeduction, where
+                - FederalTaxDeduction is calculated according to https://www.irs.gov/filing/federal-income-tax-rates-and-brackets
+                based on AnnualTaxableIncome (employee salary - benefits)
              */
 
             var employee = await _employeesRepository.GetById(employeeId);
