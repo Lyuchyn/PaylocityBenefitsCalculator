@@ -41,7 +41,7 @@ namespace Api.Services.Paycheck
              - Deductions (such as taxes, insurance, retirement contributions)
              - Net pay (the final amount the employee takes home after deductions)
              This code calculates the paycheck by following formula (for simplicity we calculate only federal tax):
-                NetPay = TaxableIncome − FederalTaxDeduction
+                NetPay = GrossPay + Benefits − FederalTaxDeduction
              */
 
             var employee = await _employeesRepository.GetById(employeeId);
@@ -50,10 +50,10 @@ namespace Api.Services.Paycheck
                 return null;
             }
 
-            decimal benefitsDeduction = _benefitService.CalculateAnnualBenefitsDeduction(employee);
-            decimal annualTaxableIncome = employee.Salary - benefitsDeduction;
+            decimal benefits = _benefitService.CalculateAnnualBenefits(employee);
+            decimal annualTaxableIncome = employee.Salary - benefits;
             decimal taxDeduction = _taxCalculationService.CalculateAnnualFederalTax(annualTaxableIncome);
-            decimal netPay = GetAmountPerPaycheck(annualTaxableIncome - taxDeduction);
+            decimal netPay = GetAmountPerPaycheck(employee.Salary - taxDeduction);
 
             return new GetPaycheckDto
             {

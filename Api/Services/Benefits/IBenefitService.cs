@@ -8,6 +8,6 @@ namespace Api.Services.Benefits
         /// Calculates annual benefits deduction amount for the provided employee.
         /// </summary>
         /// <param name="employee">The employee.</param>
-        decimal CalculateAnnualBenefitsDeduction(Employee employee);
+        decimal CalculateAnnualBenefits(Employee employee);
     }
 }

@@ -42,7 +42,7 @@ namespace ApiTests.UnitTests
             };
 
             // Act
-            var result = _underTest.CalculateAnnualBenefitsDeduction(employee);
+            var result = _underTest.CalculateAnnualBenefits(employee);
 
             // Assert
             Assert.Equal(12000, result);
@@ -75,7 +75,7 @@ namespace ApiTests.UnitTests
             };
 
             // Act
-            var result = _underTest.CalculateAnnualBenefitsDeduction(employee);
+            var result = _underTest.CalculateAnnualBenefits(employee);
 
             // Assert
             Assert.Equal(36000, result);
@@ -92,7 +92,7 @@ namespace ApiTests.UnitTests
             };
 
             // Act
-            var result = _underTest.CalculateAnnualBenefitsDeduction(employee);
+            var result = _underTest.CalculateAnnualBenefits(employee);
 
             // Assert
             Assert.Equal(13847.30m, result);

@@ -16,15 +16,15 @@ namespace Api.Services.Benefits
         }
 
         /// <inheritdoc/>
-        public decimal CalculateAnnualBenefitsDeduction(Employee employee)
+        public decimal CalculateAnnualBenefits(Employee employee)
         {
-            var benefitsDeduction =
+            var benefits =
                 GetBaseBenefitsCost() +
                 GetAnnualDependentBenefits(employee) +
                 GetAnnualDependentOver50YearsBenefits(employee) +
                 GetAnnualAdditionalBenefits(employee);
 
-            return benefitsDeduction;
+            return benefits;
         }
 
         private decimal GetBaseBenefitsCost()

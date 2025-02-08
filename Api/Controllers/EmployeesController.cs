@@ -1,6 +1,8 @@
 ﻿using Api.Dtos.Employee;
+using Api.Dtos.Paycheck;
 using Api.Models;
 using Api.Services.Employees;
+using Api.Services.Paycheck;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -11,10 +13,12 @@ namespace Api.Controllers;
 public class EmployeesController : ControllerBase
 {
     private readonly IEmployeeService _employeeService;
+    private readonly IPaycheckService _paycheckService;
 
-    public EmployeesController(IEmployeeService employeeService)
+    public EmployeesController(IEmployeeService employeeService, IPaycheckService paycheckService)
     {
         _employeeService = employeeService;
+        _paycheckService = paycheckService;
     }
 
     [SwaggerOperation(Summary = "Get employee by id")]
@@ -49,16 +53,16 @@ public class EmployeesController : ControllerBase
 
     [SwaggerOperation(Summary = "Gets the employee's paycheck")]
     [HttpGet("{id}/paycheck")]
-    public async Task<ActionResult<ApiResponse<List<GetEmployeeDto>>>> GetEmployeePaycheck(int id)
+    public async Task<ActionResult<ApiResponse<GetPaycheckDto>>> GetEmployeePaycheck(int id)
     {
-        var employees = await _employeeService.GetAll();
+        var paycheck = await _paycheckService.GetPaycheck(id);
 
-        var result = new ApiResponse<List<GetEmployeeDto>>
-        {
-            Data = employees,
-            Success = true
-        };
-
-        return result;
+        return paycheck is null
+            ? NotFound($"Employee not found for Id={id}")
+            : new ApiResponse<GetPaycheckDto>
+            {
+                Data = paycheck,
+                Success = true
+            };
     }
 }

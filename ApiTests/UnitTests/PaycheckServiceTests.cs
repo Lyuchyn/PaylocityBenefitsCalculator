@@ -67,7 +67,7 @@ namespace ApiTests.UnitTests
             _employeesRepositoryMock.Setup(x => x.GetById(employeeId))
                 .ReturnsAsync(employee);
 
-            _benefitServiceMock.Setup(x => x.CalculateAnnualBenefitsDeduction(employee))
+            _benefitServiceMock.Setup(x => x.CalculateAnnualBenefits(employee))
                 .Returns(annualBenefitsDeduction);
 
             _taxCalculationServiceMock
@@ -86,7 +86,7 @@ namespace ApiTests.UnitTests
             Assert.Equal(PayFrequency.Biweekly, result.PayFrequency);
             Assert.Equal(3552.5m, result.GrossPay);
             Assert.Equal(489.73m, result.Deductions);
-            Assert.Equal(2530.18m, result.NetPay);
+            Assert.Equal(3062.77m, result.NetPay);
         }
     }
 }
